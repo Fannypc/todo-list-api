@@ -1,4 +1,4 @@
-const {User} = require('../models');
+const {User, Task, Status} = require('../models');
 const bcrypt = require('bcryptjs');
 
 const readUsers = async(request, response)=> {
@@ -29,6 +29,7 @@ const userTasks = async(request, response) => {
         where: {
             id: userId, 
         },
+        order: [[{model: Task, as: 'tasks'},'due_date', 'ASC']],
         attributes: ['first_name'],
         /*
             you can also include or exclude in attributes
@@ -41,14 +42,14 @@ const userTasks = async(request, response) => {
             model: Task,
             as: 'tasks',
             required: false,
-            attributes: ['content'],
+            // attributes: ['id', 'content', 'due_date'],
             include: [{
                 model: Status,
                 as: 'status',
                 required: false,
-                attributes: ['name']
+                attributes: ['id', 'name']
             }]
-        }]
+        }],
     });
 
     if(users){
@@ -92,7 +93,7 @@ const deleteUser = async(request, response)=>{
             where: {
                 id: userId
             }
-        })
+        });
 
         if (decoded.id !== Number(userId) && user){
             await User.update({

@@ -22,11 +22,18 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User',
     tableName: 'users',
-    underscored: true,
+    // underscored: true,
     /* with underscore it changes from camelcase to underscored 
-       or we can pass the column's name one by one :
+       or we can pass the column's name one by one :*/
     createdAt: 'created_at',
-    updatedAt: 'updated_at' */
+    updatedAt: 'updated_at' 
   });
+  User.prototype.toJSON = function () {
+    var values = Object.assign({}, this.get());
+    delete values.password;
+    delete values.token;
+    return values
+  }
+
   return User;
 };

@@ -1,6 +1,8 @@
 const {User} = require('../models');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const cookie = require('cookie-parser');
+
 
 const login = async(request, response)=>{
     const {email, password} = request.body;
@@ -21,12 +23,14 @@ const login = async(request, response)=>{
                     }, 
                         process.env.JWT_SECRET, 
                     {
-                        expiresIn:'10m'
+                        // expiresIn:'10m'
+                        expiresIn:'1h'
                     }
                 );
                 response.cookie('access_token', token, {
-                    expires: new Date(Date.now()+ 1 * 3600000)
-                }).json({message: "Has iniciado sesion correctamente"});
+                    expires: new Date(Date.now()+ 1 * 3600000), 
+                    httpOnly:false
+                }).json({message: "Has iniciado sesion correctamente", user});
             }
         });
     }else{

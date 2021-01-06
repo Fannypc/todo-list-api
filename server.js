@@ -1,8 +1,8 @@
 const express = require('express'); // importing express
-const app = express(); // creating instance
 const validateToken = require('./middlewares/auth');
 const morgan = require('morgan');
 const cors = require('cors');
+const app = express(); // creating instance
 const cookieParser = require('cookie-parser');
 
 //Import Routes
@@ -11,11 +11,20 @@ const userRouter = require('./routes/user');
 const taskRouter = require('./routes/task');
 const statusRouter = require('./routes/status');
 
+//CORS middleware
+// var allowCrossDomain = function(req, res, next) {
+//     res.header('Access-Control-Allow-Origin', 'example.com');
+//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+//     next();
+// }
 
 //Middlewares
 app.use(express.json());
 app.use(morgan('dev'));
-app.use(cors());
+app.use(cors({credentials: true, origin: true}));
+// app.use(allowCrossDomain);
 app.use(cookieParser());
 
 //Rutas de autenticación
