@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const app = express(); // creating instance
 const cookieParser = require('cookie-parser');
+const cool = require('cool-ascii-faces');
 
 //Import Routes
 const authRouter = require('./routes/auth');
@@ -22,6 +23,7 @@ const statusRouter = require('./routes/status');
 
 //Middlewares
 app.use(express.json());
+app.get('/cool', (req, res) => res.send(cool()));
 app.use(morgan('dev'));
 app.use(cors({credentials: true, origin: true}));
 // app.use(allowCrossDomain);
