@@ -43,7 +43,11 @@ app.get('/', (request, response)=>{
 
 // Middleware that acts over any HTTP petition (GET, POST, DELETE, PUT)
 app.use((req, res)=>{
-    res.send('<h1>404</h1>')
+    res.status(404).json({
+        errors: {
+            global: 'Algo salió mal'
+        }
+    })
 });
 
 module.exports = app;
