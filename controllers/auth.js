@@ -33,10 +33,11 @@ const login = async(request, response)=>{
                     expiresIn:'1h'
                 }
             );
-            response.cookie('access_token', token, {
-                expires: new Date(Date.now()+ 1 * 3600000), 
-                httpOnly:false
-            }).json({message: "Has iniciado sesion correctamente", user});
+            response.json({message: "Has iniciado sesion correctamente", user, token});
+            // response.cookie('access_token', token, {
+            //     expires: new Date(Date.now()+ 1 * 3600000), 
+            //     httpOnly:false
+            // }).json({message: "Has iniciado sesion correctamente", user});
         }
 
 
@@ -70,7 +71,7 @@ const login = async(request, response)=>{
 
 const logout = (req, res) => {
     res
-        .clearCookie('access_token', {path: '/'})
+        // .clearCookie('access_token', {path: '/'})
         .json({message: "Cerrando sesión..."});
 }
 
