@@ -30,7 +30,8 @@ const login = async(request, response)=>{
                     process.env.JWT_SECRET, 
                 {
                     // expiresIn:'10m'
-                    expiresIn:'1h'
+                    // expiresIn:'1h'
+                    expiresIn:'365d'
                 }
             );
             response.json({message: "Has iniciado sesion correctamente", user, token});

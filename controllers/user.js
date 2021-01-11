@@ -24,43 +24,43 @@ const readUserById = async(request, response)=> {
 }
 
 const userTasks = async(request, response) => {
-    const userId = request.params.id;
-    const users = await User.findOne({
-        where: {
-            id: userId, 
-        },
-        order: [[{model: Task, as: 'tasks'},'due_date', 'ASC']],
-        attributes: ['first_name'],
-        /*
-            you can also include or exclude in attributes
-            attributes: {
-                include: [],
-                exclude: []
-            } 
-        */
-        include: [{
-            model: Task,
-            as: 'tasks',
-            required: false,
-            // attributes: ['id', 'content', 'due_date'],
-            include: [{
-                model: Status,
-                as: 'status',
-                required: false,
-                attributes: ['id', 'name']
-            }]
-        }],
-    });
+    // const userId = request.params.id;
+    // const users = await User.findOne({
+    //     where: {
+    //         id: userId, 
+    //     },
+    //     order: [[{model: Task, as: 'tasks'},'due_date', 'ASC']],
+    //     attributes: ['first_name'],
+    //     /*
+    //         you can also include or exclude in attributes
+    //         attributes: {
+    //             include: [],
+    //             exclude: []
+    //         } 
+    //     */
+    //     include: [{
+    //         model: Task,
+    //         as: 'tasks',
+    //         required: false,
+    //         // attributes: ['id', 'content', 'due_date'],
+    //         include: [{
+    //             model: Status,
+    //             as: 'status',
+    //             required: false,
+    //             attributes: ['id', 'name']
+    //         }]
+    //     }],
+    // });
 
-    if(users){
-        /* to return just tasks 
-            console.log(users.dataValues.tasks);
-        */
-        response.json({ user: users })
-    }else{
-        response.status(400).json({message:'Error'});
-    }
-
+    // if(users){
+    //     /* to return just tasks 
+    //         console.log(users.dataValues.tasks);
+    //     */
+    //     response.json({ user: users })
+    // }else{
+    //     response.status(400).json({message:'Error'});
+    // }
+    response.status(400).json({errors: {message: 'Error'}})
 }
 
 
