@@ -35,36 +35,7 @@ const login = async(request, response)=>{
                 }
             );
             response.json({message: "Has iniciado sesion correctamente", user, token});
-            // response.cookie('access_token', token, {
-            //     expires: new Date(Date.now()+ 1 * 3600000), 
-            //     httpOnly:false
-            // }).json({message: "Has iniciado sesion correctamente", user});
         }
-
-
-        // bcrypt.compare(password, user.password, function(err,res){
-        //     if(err || res === false ){
-        //         response.status(401).json({message: "Credenciales incorrectas"});
-        //     }else{
-        //         const token = jwt.sign(
-        //             {
-        //                 id: user.id, 
-        //                 email: user.email, 
-        //                 first_name: user.first_name,
-        //                 last_name: user.last_name
-        //             }, 
-        //                 process.env.JWT_SECRET, 
-        //             {
-        //                 // expiresIn:'10m'
-        //                 expiresIn:'1h'
-        //             }
-        //         );
-        //         response.cookie('access_token', token, {
-        //             expires: new Date(Date.now()+ 1 * 3600000), 
-        //             httpOnly:false
-        //         }).json({message: "Has iniciado sesion correctamente", user});
-        //     }
-        // });
     }else{
         response.status(400).json({errors});
     }
@@ -72,11 +43,11 @@ const login = async(request, response)=>{
 
 const logout = (req, res) => {
     res
-        // .clearCookie('access_token', {path: '/'})
         .json({message: "Cerrando sesión..."});
 }
 
 const register = async(request, response)=>{
+    console.log('estoy en register');
     let {first_name, last_name, email, password} = request.body;
     // encrypt the password with bcryptjs
     const passwordEncrypted = bcrypt.hashSync(password, 10);
@@ -96,6 +67,7 @@ const register = async(request, response)=>{
         )
         response.json({message:'Usuario creado'});
     }catch(error){
+        console.log(error);
         response.status(400).json({message:'Error'});
     }
 }

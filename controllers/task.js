@@ -20,11 +20,11 @@ const createTask = async(request, response)=> {
             task.setDataValue('status', await task.getStatus());
             response.json({task});
         }catch(error){
-            // console.log(error);
-            response.status(400).json({message:'Error'});
+            console.log(error);
+            response.status(400).json({errors: {message: 'Error'}});
         }
     }else{
-        response.status(400).json({errors});
+        response.status(400).json({errors: {message: 'Error'}});
     }
 }
 
@@ -46,7 +46,7 @@ const readTaskById = async(request, response)=> {
     if(task){
         response.json(task);
     }else{
-        response.status(400).json({message:'Error'});
+        response.status(400).json({errors: {message: 'Error'}});
     }
 }
 
