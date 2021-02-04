@@ -12,7 +12,7 @@ const login = async(request, response)=>{
         let user = await User.findOne({where: {email}});
     
         if(!user){
-            response.status(401).json({message: "Credenciales incorrectas"});
+            response.status(401).json({errors: {message: "Credenciales incorrectas"}});
         }
 
         // compare passwords
@@ -47,7 +47,6 @@ const logout = (req, res) => {
 }
 
 const register = async(request, response)=>{
-    console.log('estoy en register');
     let {first_name, last_name, email, password} = request.body;
     // encrypt the password with bcryptjs
     const passwordEncrypted = bcrypt.hashSync(password, 10);
@@ -64,11 +63,25 @@ const register = async(request, response)=>{
                 created_at: new Date(),
                 updated_at: new Date()
             }   
-        )
-        response.json({message:'Usuario creado'});
+        );
+        const token = jwt.sign(
+            {
+                id: user.id, 
+                email: user.email, 
+                first_name: user.first_name,
+                last_name: user.last_name
+            }, 
+                process.env.JWT_SECRET, 
+            {
+                // expiresIn:'10m'
+                // expiresIn:'1h'
+                expiresIn:'365d'
+            }
+        );
+        response.json({message:'Usuario creado', user, token});
     }catch(error){
         console.log(error);
-        response.status(400).json({message:'Error'});
+        response.status(400).json({errors: {message:'Error al intentar crear el usuario'}});
     }
 }
 
