@@ -32,6 +32,7 @@ const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 const taskRouter = require('./routes/task');
 const statusRouter = require('./routes/status');
+const { sequelize } = require('./models');
 
 //Middlewares
 app.use(express.json());

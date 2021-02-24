@@ -74,8 +74,8 @@ const register = async(request, response)=>{
                 process.env.JWT_SECRET, 
             {
                 // expiresIn:'10m'
-                // expiresIn:'1h'
-                expiresIn:'365d'
+                expiresIn:'1h'
+                // expiresIn:'365d'
             }
         );
         response.json({message:'Usuario creado', user, token});

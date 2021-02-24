@@ -21,7 +21,7 @@ const createTask = async(request, response)=> {
             response.json({task});
         }catch(error){
             console.log(error);
-            response.status(400).json({errors: {message: 'Error'}});
+            response.status(400).json({errors: {message: error}});
         }
     }else{
         response.status(400).json({errors});

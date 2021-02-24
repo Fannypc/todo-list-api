@@ -31,18 +31,10 @@ const userTasks = async(request, response) => {
         },
         order: [[{model: Task, as: 'tasks'},'due_date', 'ASC']],
         attributes: ['first_name'],
-        /*
-            you can also include or exclude in attributes
-            attributes: {
-                include: [],
-                exclude: []
-            } 
-        */
         include: [{
             model: Task,
             as: 'tasks',
             required: false,
-            // attributes: ['id', 'content', 'due_date'],
             include: [{
                 model: Status,
                 as: 'status',
@@ -53,14 +45,10 @@ const userTasks = async(request, response) => {
     });
 
     if(users){
-        /* to return just tasks 
-            console.log(users.dataValues.tasks);
-        */
         response.json({ user: users })
     }else{
         response.status(400).json({message:'Error'});
     }
-    // response.status(400).json({errors: {message: 'Error'}});
 }
 
 
